@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>input-masks-br · demo</title>
+  <style>
+    :root { color-scheme: light dark; --bg: #f8fafc; --fg: #0f172a; --muted: #64748b; --card: #fff; --border: #cbd5e1; --accent: #2563eb; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #020617; --fg: #f1f5f9; --muted: #94a3b8; --card: #0f172a; --border: #334155; --accent: #60a5fa; } }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, sans-serif; padding: 40px 16px; }
+    main { max-width: 640px; margin: 0 auto; }
+    h1 { margin: 0 0 6px; font-size: clamp(26px, 6vw, 36px); }
+    p { color: var(--muted); margin: 0 0 24px; }
+    form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) { form { grid-template-columns: 1fr; } }
+    label { display: grid; gap: 6px; font-size: 13px; font-weight: 600; color: var(--muted); }
+    input { font: 16px ui-monospace, monospace; padding: 11px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--fg); width: 100%; }
+    input:focus { outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent); border-color: var(--accent); }
+    small { font: 12px ui-monospace, monospace; color: var(--muted); min-height: 1em; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>input-masks-br</h1>
+    <p>Digite, edite no meio, apague um ponto com backspace: o cursor fica onde deve.</p>
+    <form autocomplete="off">
+      <label>CPF <input id="cpf" data-mask="cpf" placeholder="000.000.000-00" /><small></small></label>
+      <label>CNPJ (alfanumérico) <input id="cnpj" data-mask="cnpj" placeholder="AA.AAA.AAA/AAAA-00" /><small></small></label>
+      <label>CPF ou CNPJ <input id="doc" data-mask="cpfCnpj" /><small></small></label>
+      <label>Telefone <input id="phone" data-mask="phone" placeholder="(00) 00000-0000" /><small></small></label>
+      <label>CEP <input id="cep" data-mask="cep" placeholder="00000-000" /><small></small></label>
+      <label>Data <input id="date" data-mask="date" placeholder="dd/mm/aaaa" /><small></small></label>
+      <label>Valor <input id="money" data-mask="money" placeholder="R$ 0,00" /><small></small></label>
+      <label>Placa <input id="plate" data-mask="plate" placeholder="ABC1D23" /><small></small></label>
+    </form>
+  </main>
+  <script type="module">
+    import { autoBind } from '../src/input-masks-br.js';
+    autoBind();
+    // Mostra o valor limpo (data-raw) que iria para o servidor
+    document.addEventListener('input', (e) => {
+      const small = e.target.nextElementSibling;
+      if (small) small.textContent = e.target.dataset.raw ? `valor: ${e.target.dataset.raw}` : '';
+    });
+  </script>
+</body>
+</html>
